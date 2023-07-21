@@ -56,7 +56,11 @@ export default {
   updateProducto: async (req, res, next) => {
     try {
       const updateDatos = req.body;
-      await Models.Producto.findByIdAndUpdate(req.params.id, updateDatos);
+      await Models.Producto.findByIdAndUpdate(req.params.id, {
+        ...updateDatos,
+        filename: req.file.filename,
+        path: 'public/images/' + req.file.filename
+      });
       res.json({
         message: "Datos modificados"
       })
